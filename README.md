@@ -23,7 +23,7 @@ Writes one string value to a particular private data tag. If the query returns m
 ##### Example
 Query:
 ```sql
-/* Returns two rows/components */
+/* Returns one row/job */
 SELECT Description FROM OrderHeader WHERE JobNumber = '123456' 
 ```
 Private data tag: _JobDescription_
