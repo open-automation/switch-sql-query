@@ -19,7 +19,18 @@ Writes one string value per row to an incrimenting set of private data tags. You
 
 ##### Example
 Query:
+```sql
+/* Returns two rows/components */
+SELECT Description FROM OrderHeader WHERE JobNumber = '123456' 
 ```
+Private data tag: _JobDescription_
+
+Returns the following private data key:
+- JobDescription => My quarterly mailer
+
+##### Example
+Query:
+```sql
 /* Returns two rows/components */
 SELECT Description FROM OrderComponent WHERE JobNumber = '123456' 
 ```
