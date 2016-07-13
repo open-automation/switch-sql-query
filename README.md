@@ -34,7 +34,6 @@ Returns the following private data key:
 #### Multiple result value
 Writes one string value per row to an incrimenting set of private data tags. You'll be prompted to enter a "Private data prefix". For each row returned, the value will be written to [Your Prefix]1, [Your Prefix]2, etc...
 
-
 ##### Example
 Query:
 ```sql
@@ -47,5 +46,29 @@ Returns the following private data keys:
 - ComponentDescription1 => My brochure
 - ComponentDescription2 => My envelope
 
-### Dataset
+#### Dataset
+Writes the entire result set to an XML dataset for a given dataset name. 
 
+##### Example
+Query:
+```sql
+/* Returns two rows/components */
+SELECT Description FROM OrderComponent WHERE JobNumber = '123456' 
+```
+Dataset name: _SQLQuery_
+
+Returns the following embedded dataset:
+```xml
+<SQLQuery>
+  <rows>
+    <row>
+      <Description>My brochure</Description>
+      <ComponentNumber>1</ComponentNumber>
+    </row>
+    <row>
+      <Description>My envelope</Description>
+      <ComponentNumber>2</ComponentNumber>
+    </row>
+  </rows>
+</SQLQuery>
+```
