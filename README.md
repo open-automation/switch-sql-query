@@ -53,7 +53,7 @@ Writes the entire result set to an XML dataset for a given dataset name.
 Query:
 ```sql
 /* Returns two rows/components */
-SELECT Description FROM OrderComponent WHERE JobNumber = '123456' 
+SELECT Description,ComponentNumber FROM OrderComponent WHERE JobNumber = '123456' 
 ```
 Dataset name: _SQLQuery_
 
