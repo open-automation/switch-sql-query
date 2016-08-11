@@ -18,7 +18,6 @@ Simply sends the query directly to the database, relying on Switch's variable pa
 
 ##### Example
 ```sql
-/* Returns one row/job */
 SELECT Description FROM OrderHeader WHERE JobNumber = '[Job.PrivateData:Key="JobNumber"]' 
 ```
 
@@ -28,7 +27,6 @@ An imitation of SQL prepared statements which replaces :placeholders with variab
 ##### Example
 **Query:**
 ```sql
-/* Returns one row/job */
 SELECT Description FROM OrderHeader WHERE JobNumber = :jobNumber
 ```
 **Placeholder:** :jobNumber
