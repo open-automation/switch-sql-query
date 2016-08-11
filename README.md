@@ -4,12 +4,9 @@ Query SQL from Switch via an ODBC connection.
 ## Flow element properties
 
 ### Credentials
-#### Data source name
-The ODBC data source name.
-#### Data source username
-The data source username.
-#### Data source password
-The data source password.
+- **Data source name** - The ODBC data source name.
+- **Data source username** - The data source username.
+- **Data source password** - The data source password.
 
 ### SQL query
 The well formed SQL query. If you choose single or multi value result types, the first field will be selected. You don't have to worry about this if your query only returns a single field.
