@@ -22,16 +22,16 @@ SELECT Description FROM OrderHeader WHERE JobNumber = '[Job.PrivateData:Key="Job
 ```
 
 #### Parameterized
-An imitation of SQL prepared statements which replaces :placeholders with variables. An attempt is made to remove unsafe SQL characters which could be used for injection as well as enforcing types.
+An imitation of SQL prepared statements which replaces *:placeholders* with variables. An attempt is made to remove unsafe SQL characters which could be used for injection as well as enforcing types.
 
 ##### Example
 **Query:**
 ```sql
 SELECT Description FROM OrderHeader WHERE JobNumber = :jobNumber
 ```
-**Placeholder:** :jobNumber
-**Value:** [Job.PrivateData:Key="JobNumber"]
-**Type:** string
+- **Placeholder:** :jobNumber
+- **Value:** [Job.PrivateData:Key="JobNumber"]
+- **Type:** string
 
 ## Result type
 This script supports three methods of returning results, depending on whether or not you want your values saved to private data, a dataset, or how many results you want to return.
