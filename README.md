@@ -11,6 +11,30 @@ Query SQL from Switch via an ODBC connection.
 ### SQL query
 The well formed SQL query. If you choose single or multi value result types, the first field will be selected. You don't have to worry about this if your query only returns a single field.
 
+### Query type
+
+#### Direct
+Simply sends the query directly to the database, relying on Switch's variable parser to insert variables.
+
+##### Example
+```sql
+/* Returns one row/job */
+SELECT Description FROM OrderHeader WHERE JobNumber = '[Job.PrivateData:Key="JobNumber"]' 
+```
+
+#### Parameterized
+An imitation of SQL prepared statements which replaces :placeholders with variables. An attempt is made to remove unsafe SQL characters which could be used for injection as well as enforcing types.
+
+##### Example
+**Query:**
+```sql
+/* Returns one row/job */
+SELECT Description FROM OrderHeader WHERE JobNumber = :jobNumber
+```
+**Placeholder:** :jobNumber
+**Value:** [Job.PrivateData:Key="JobNumber"]
+**Type:** string
+
 ## Result type
 This script supports three methods of returning results, depending on whether or not you want your values saved to private data, a dataset, or how many results you want to return.
 
