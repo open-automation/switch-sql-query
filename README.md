@@ -19,7 +19,10 @@ Simply sends the query directly to the database, relying on Switch's variable pa
 ##### Example
 ```sql
 SELECT Description FROM OrderHeader WHERE JobNumber = '[Job.PrivateData:Key="JobNumber"]' 
+-- Results in:
+-- SELECT Description FROM OrderHeader WHERE JobNumber = '123456' 
 ```
+- **Private data:** [Job.PrivateData:Key="JobNumber"] => 123456
 
 #### Parameterized
 An imitation of SQL prepared statements which replaces *:placeholders* with variables. An attempt is made to remove unsafe SQL characters which could be used for injection as well as enforcing types.
@@ -28,9 +31,11 @@ An imitation of SQL prepared statements which replaces *:placeholders* with vari
 **Query:**
 ```sql
 SELECT Description FROM OrderHeader WHERE JobNumber = :jobNumber
+-- Results in:
+-- SELECT Description FROM OrderHeader WHERE JobNumber = '123456' 
 ```
 - **Placeholder:** :jobNumber
-- **Value:** [Job.PrivateData:Key="JobNumber"]
+- **Value:** [Job.PrivateData:Key="JobNumber"] => 123;456
 - **Type:** string
 
 ## Result type
