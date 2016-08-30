@@ -71,9 +71,11 @@ var odbcConnect = function(s : Switch, job : Job, ds_name, username, password, c
 
 		data_source.disconnect(); // Kill connection
 		job.log(-1, "Disconnected");
+		return true;
 	} else {
 		job.log(3, "Could not connect to data source. Please check ODBC connection or credentials.");
-		job.sendToData(3, job.getPath());
+		//job.sendToData(3, job.getPath());
+		return false;
 	}
 }
 
@@ -123,9 +125,11 @@ var getQueryResult = function(s : Switch, job : Job, data_source, query, result_
 			job.log(-1, "No row found");
 			callback("", 0, "");
 		}
+		return true;
 	} else {
 		job.log(3, "Query execution was not successful.");
-		job.sendToData(3, job.getPath());
+		//job.sendToData(3, job.getPath());
+		return false;
 	}
 }
 
@@ -299,6 +303,8 @@ function jobArrived( s : Switch, job : Job )
 	var dataset_name = s.getPropertyValue('DatasetName');
 	var query_type = s.getPropertyValue('QueryType');
 
+	var odbc_connect_result, get_query_result, parameterize_result;
+
 	// Parameterize query
 	if(query_type == 'Parameterized'){
 		query = parameterizeQuery(s, query);
@@ -306,11 +312,13 @@ function jobArrived( s : Switch, job : Job )
 		if(query === false){
 			// Fail job
 			job.log(3, "Query has failed to parameterize. See previous log message(s).");
-			job.sendToData(3, job.getPath());
-			return false;
+			parameterize_result = false;
 		} else {
 			s.log(-1, query);
+			parameterize_result = true;
 		}
+	} else {
+		parameterize_result = true;
 	}
 
 	// Create dataset if needed
@@ -324,10 +332,11 @@ function jobArrived( s : Switch, job : Job )
 	var rows_node = createElement(root, doc, "rows", "");
 	var current_row = 0;
 
-	// Fire connection
-	odbcConnect(s, job, data_source_name, data_source_username, data_source_password, function(data_source){
 
-		getQueryResult(s, job, data_source, query, result_type, function(value, index, column_name){
+	// Fire connection
+	odbc_connect_result = odbcConnect(s, job, data_source_name, data_source_username, data_source_password, function(data_source){
+
+		get_query_result = getQueryResult(s, job, data_source, query, result_type, function(value, index, column_name){
 			if( result_type == "Multiple result value" ){
 				job.setPrivateData( private_data_prefix + index, value );
 			} else if( result_type == "Single result value" ){
@@ -357,10 +366,14 @@ function jobArrived( s : Switch, job : Job )
 		doc.save(dataset_backing);
 	}
 
-	// log
-	//s.log(2, File.read(dataset_backing));
-
 	// Success out
-	job.sendToData(1, job.getPath() );
-
+	if(get_query_result === true && odbc_connect_result === true && parameterize_result === true){
+		//s.log(-1, "success triggered");
+		job.sendToData(1, job.getPath() );
+	} else {
+		// job error data out should have already been sent.
+		//s.log(-1, "failure triggered");
+		job.sendToData(3, job.getPath());
+	}
+	return;
 }
