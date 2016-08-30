@@ -96,3 +96,8 @@ Returns the following embedded dataset:
   </rows>
 </SQLQuery>
 ```
+
+## Versions
+- **Version 1** - Standard
+- **Version 2** - Add support for parameterized queries
+- **Version 3** - Use traffic-light style connections
