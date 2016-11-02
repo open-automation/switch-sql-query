@@ -1,6 +1,8 @@
 # switch-sql-query
 Query SQL from Switch via an ODBC connection.
 
+<img src="https://i.imgur.com/WUyFOk2.png" width="370">
+
 ## Flow element properties
 
 ### Credentials
